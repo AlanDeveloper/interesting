@@ -12,3 +12,17 @@ services:
     env_file:
       - .env
     command: npm run dev
+  
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: your_database
+    ports:
+      - "54322:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
