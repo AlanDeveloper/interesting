@@ -4,6 +4,7 @@ import { prisma } from "../../lib/prisma";
 
 export const CreateUser = async (app: FastifyInstance) => {
     app.post('/users', async (request: FastifyRequest, reply: FastifyReply) => {
+        
         const createUserBody = z.object({
             name: z.string(),
             email: z.string(),
