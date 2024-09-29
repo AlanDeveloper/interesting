@@ -27,6 +27,12 @@ const options = {
 }
 app.register(fastifyEnv, options)
 
+app.setErrorHandler(async (error, request, reply) => {
+    // Logging locally
+    console.log(error);
+    reply.status(500).send({ error: "Something went wrong" });
+})
+
 app.ready(err => {
     if (err) {
         console.error(err);
