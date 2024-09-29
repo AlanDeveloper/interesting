@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { prisma } from "../../lib/prisma";
+import bcrypt from 'bcryptjs';
 
 export const UpdateUser = async (app: FastifyInstance) => {
     app.put('/users/:userUuid', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -30,17 +31,21 @@ export const UpdateUser = async (app: FastifyInstance) => {
 
         const { name, email, password } = updateUserBody.parse(request.body);
 
-        user = await prisma.user.update({
-            where: {
-                id: user.id,
-            },
-            data: {
-                name,
-                email,
-                password,
-            },
+        await bcrypt.hash(password, 10).then(async (hash) => {
+            user = await prisma.user.update({
+                where: {
+                    id: user!.id,
+                },
+                data: {
+                    name,
+                    email,
+                    password: hash,
+                },
+            });
+    
+            return reply.status(200).send(user);
+        }).catch(err => {
+            console.error('Erro:', err);
         });
-
-        return reply.status(200).send(user);
     });
 }
