@@ -23,3 +23,12 @@ model User {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
 }
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  uuid      String   @db.Uuid @default(uuid())
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
