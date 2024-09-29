@@ -108,7 +108,7 @@ export const deleteCategory = async (request: FastifyRequest, reply: FastifyRepl
 
     await prisma.category.delete({
         where: {
-            id: category.id
+            id: category!.id
         },
     });
 

@@ -125,7 +125,7 @@ export const deleteUser = async (request: FastifyRequest, reply: FastifyReply) =
 
     await prisma.user.delete({
         where: {
-            id: user.id
+            id: user!.id
         },
     });
 
